@@ -9,10 +9,27 @@
     let wlist=[];
     let emlist = [];
     let copyv;
+    let emojiofday;
     let texttocopy;
     let copytoclip;
+    let fest;
+    let festivals = [
+    { name: "New Year", date: "1-1", emoji: "🎆" },
+    { name: "Valentine's Day", date: "2-14", emoji: "❤️" },
+    { name: "St. Patrick's Day", date: "3-17", emoji: "🍀" },
+    { name: "Easter", date: "4-09", emoji: "🐰" }, // Example date, Easter varies each year
+    { name: "Halloween", date: "10-31", emoji: "🎃" },
+    { name: "Thanksgiving", date: "11-23", emoji: "🦃" }, // Example date, Thanksgiving varies each year
+    { name: "Christmas", date: "12-25", emoji: "🎄" },
+    { name: "Launch Day",date:"30-7",emoji:"🎉"}
+    ];
 
      onMount(() => {
+        const today = new Date();
+        const currentdate = `${today.getDate()}-${today.getMonth()}`
+        console.log(currentdate)
+        fest =festivals.find(f => f.date === currentdate)
+        emojiofday = fest ? fest.emoji : "🤩"
         copytoclip =()=>{
             texttocopy = copyv.textContent;
 
@@ -56,8 +73,11 @@
 <div class="main">
     <div class="nav">
         <div class="title">
-            <h1>📖 Mojilang</h1>
+            <h1>{emojiofday} Mojilang</h1>
             <p>Convert your text to emojis</p>
+            {#if fest}
+            <p1>"Happy {fest ? fest.name : ""} {emojiofday}"</p1>
+            {/if}
         </div>
     </div>
 <input class="sbar" type="text" placeholder="Type a sentance..."  bind:value={inp} on:change={() => convert2moji()} name="" id="">
@@ -110,7 +130,7 @@
     justify-content: center;
     margin-bottom: 40px;
     width: 100%;
-    background-color: #398AB9;
+    background-color: transparent;
     color: #ffffff;
 }
 .but{
