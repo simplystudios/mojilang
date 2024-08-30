@@ -13,6 +13,8 @@
     let texttocopy;
     let copytoclip;
     let fest;
+    let emojinameofday;
+    let emojiofdaypng;
     let festivals = [
     { name: "New Year", date: "1-1", emoji: "🎆" },
     { name: "Valentine's Day", date: "2-14", emoji: "❤️" },
@@ -24,12 +26,40 @@
     { name: "Launch Day",date:"30-7",emoji:"🎉"}
     ];
 
-     onMount(() => {
+     onMount(async() => {
         const today = new Date();
         const currentdate = `${today.getDate()}-${today.getMonth()}`
         console.log(currentdate)
         fest =festivals.find(f => f.date === currentdate)
         emojiofday = fest ? fest.emoji : "🤩"
+        let t = await fetch("https://raw.githubusercontent.com/muan/emojilib/main/dist/emoji-en-US.json")
+        t = await t.json();
+        for (const key in t){
+            if(key === emojiofday){
+                console.log(key)
+                emojinameofday = t[key][0]
+                console.log(emojinameofday)
+                emojiofdaypng = `https://emojiapi.dev/api/v1/${emojinameofday}/100.png`
+                // Create and set favicon
+                const link = document.createElement('link');
+                link.rel = 'icon';
+                link.type = 'image/png';
+                link.href = emojiofdaypng;
+                document.title = `Mojilang - ${fest ? `Happy ${fest.name}` : emojiofday}`;
+
+                // Remove any existing favicons
+                const existingFavicon = document.querySelector('link[rel="icon"]');
+                if (existingFavicon) {
+                    existingFavicon.remove();
+                }
+
+                // Append the new favicon to the head
+                document.head.appendChild(link)
+                }
+            }
+        // emojinameofday = translate.translate(emojiofday)
+        // console.log(emojinameofday)
+
         copytoclip =()=>{
             texttocopy = copyv.textContent;
 
