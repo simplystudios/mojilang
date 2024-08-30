@@ -110,7 +110,7 @@
             {/if}
         </div>
     </div>
-<input class="sbar" type="text" placeholder="Type a sentance..."  bind:value={inp} on:change={() => convert2moji()} name="" id="">
+<input class="sbar" type="text" placeholder="Type a sentence..."  bind:value={inp} on:change={() => convert2moji()} name="" id="">
 <!-- <h1>{translatedPhrase}</h1> -->
  {#if translatedPhrase}
     <button class="but" on:click={() => copytoclip()}>Copy to clipboard</button>
